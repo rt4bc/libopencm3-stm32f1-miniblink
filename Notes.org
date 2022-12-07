@@ -1,0 +1,5 @@
+* Building
+To reduce building time, by specifying the particular MCU series.
+#+begin_src shell
+make TARGETS='stm32/f1'
+#+end_src
