@@ -2,10 +2,10 @@
 # 1) add a rule for your board to the bottom of this file
 # 2) profit!
 
-LFLAGS_STM32=$(LFLAGS) template_stm32.c -T ld.stm32.basic
+LFLAGS_STM32=$(LFLAGS) miniblink_stm32.c -T ld.stm32.basic
 
 # STM32F0 starts up with HSI at 8Mhz
-STM32F0_CFLAGS=$(M0_FLAGS) -DSTM32F0 -DLITTLE_BIT=100000 $(LFLAGS_STM32) -lopencm3_stm32f0
+#STM32F0_CFLAGS=$(M0_FLAGS) -DSTM32F0 -DLITTLE_BIT=100000 $(LFLAGS_STM32) -lopencm3_stm32f0
 # STM32F1 starts up with HSI at 8Mhz
 STM32F1_CFLAGS=$(M3_FLAGS) -DSTM32F1 -DLITTLE_BIT=200000 $(LFLAGS_STM32) -lopencm3_stm32f1
 # # STM32F2 starts up with HSI at 16MHz
@@ -39,14 +39,14 @@ define MakeBoard
 BOARDS_ELF+=$(OD)/stm32/$(1).elf
 BOARDS_BIN+=$(OD)/stm32/$(1).bin
 BOARDS_HEX+=$(OD)/stm32/$(1).hex
-$(OD)/stm32/$(1).elf: template_stm32.c libopencm3/lib/libopencm3_$(5).a
+$(OD)/stm32/$(1).elf: miniblink_stm32.c libopencm3/lib/libopencm3_$(5).a
 	@echo "  $(5) -> Creating $(OD)/stm32/$(1).elf"
 	$(call RAWMakeBoard,$(2),$(3),$(4),$(1).elf,$(6),$(7))
 endef
 
-define stm32f0board
-	$(call MakeBoard,$(1),$(2),$(3),$(STM32F0_CFLAGS),stm32f0,$(4),$(5))
-endef
+#define stm32f0board
+#	$(call MakeBoard,$(1),$(2),$(3),$(STM32F0_CFLAGS),stm32f0,$(4),$(5))
+#endef
 define stm32f1board
 	$(call MakeBoard,$(1),$(2),$(3),$(STM32F1_CFLAGS),stm32f1,$(4),$(5))
 endef
